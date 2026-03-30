@@ -1,0 +1,177 @@
+# Prediction Markets Aggregator Configuration
+# Edit this file to add/remove keywords without changing Python code
+
+categories:
+  macro:
+    keywords:
+      - Fed
+      - recession
+      - CPI
+      - inflation
+      - rate
+      - GDP
+      - oil
+      - gold
+      - unemployment
+      - jobs
+      - payroll
+      - dollar
+      - DXY
+      - yield
+      - treasury
+      - bonds
+      - silver
+      - commodity
+      - S&P
+      - Nasdaq
+      - stock market
+      - debt ceiling
+      - shutdown
+      - ECB
+      - Bank of England
+      - BOJ
+      - tariff
+      - trade war
+    min_volume_usd: 100000
+    
+  crypto:
+    keywords:
+      - Bitcoin
+      - BTC
+      - ETH
+      - Ethereum
+      - crypto
+      - stablecoin
+      - reserve
+      - Solana
+      - SOL
+      - XRP
+      - altcoin
+      - token
+      - ETF
+      - spot ETF
+      - MicroStrategy
+      - MSTR
+      - Coinbase
+      - Binance
+      - USDT
+      - USDC
+      - Tether
+      - halving
+      - mining
+      - DeFi
+      - blockchain
+      - SEC
+      - CFTC
+    min_volume_usd: 500000
+    
+  geopolitics:
+    keywords:
+      - Iran
+      - Ukraine
+      - Israel
+      - China
+      - Russia
+      - war
+      - ceasefire
+      - Gaza
+      - Hamas
+      - Hezbollah
+      - Taiwan
+      - South China Sea
+      - North Korea
+      - nuclear
+      - Venezuela
+      - Cuba
+      - NATO
+      - sanctions
+      - oil price
+      - OPEC
+      - Middle East
+      - Sudan
+    min_volume_usd: 100000
+    
+  politics:
+    keywords:
+      - Senate
+      - Congress
+      - regulation
+      - Trump
+      - Biden
+      - Harris
+      - Vance
+      - Republican
+      - Democrat
+      - midterm
+      - "2026"
+      - Supreme Court
+      - SCOTUS
+      - impeach
+      - government shutdown
+      - strategic reserve
+      - crypto bill
+      - stablecoin bill
+    min_volume_usd: 50000
+    
+  companies:
+    keywords:
+      - Apple
+      - AAPL
+      - NVIDIA
+      - Tesla
+      - TSLA
+      - Microsoft
+      - MSFT
+      - Google
+      - Alphabet
+      - Meta
+      - Amazon
+      - OpenAI
+      - ChatGPT
+    min_volume_usd: 100000
+
+# API Configuration
+apis:
+  polymarket:
+    base_url: "https://clob.polymarket.com"
+    enabled: true
+    
+  kalshi:
+    base_url: "https://trading-api.kalshi.com/trade-api/v2"
+    enabled: true
+    # Add your credentials in environment variables:
+    # KALSHI_EMAIL and KALSHI_PASSWORD
+    
+  opinion:
+    base_url: "https://api.opinion.trade"
+    enabled: true
+    # Add your credentials in environment variables:
+    # OPINION_API_KEY
+    
+  fear_greed:
+    base_url: "https://api.alternative.me/fng/"
+    enabled: true
+    
+  coingecko:
+    base_url: "https://api.coingecko.com/api/v3"
+    enabled: true
+
+# Database Configuration
+database:
+  # Set SUPABASE_URL and SUPABASE_KEY in environment variables
+  batch_size: 100
+  
+# Monitoring Configuration
+monitoring:
+  email_alerts: true
+  # Set these in environment variables:
+  # ALERT_EMAIL_FROM
+  # ALERT_EMAIL_TO
+  # SMTP_HOST
+  # SMTP_PORT
+  # SMTP_USER
+  # SMTP_PASSWORD
+  
+# Scheduling
+schedule:
+  interval_minutes: 15

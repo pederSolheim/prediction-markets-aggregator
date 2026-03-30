@@ -1,0 +1,22 @@
+2026-03-30 14:01:23,154 - __main__ - INFO - Configuration loaded from config.yaml
+2026-03-30 14:01:23,174 - __main__ - INFO - Running one-time collection
+2026-03-30 14:01:23,174 - __main__ - INFO - ============================================================
+2026-03-30 14:01:23,174 - __main__ - INFO - Starting data collection cycle
+2026-03-30 14:01:23,174 - __main__ - INFO - ============================================================
+2026-03-30 14:01:23,762 - __main__ - INFO - Fetched 4 markets from Polymarket
+2026-03-30 14:01:23,762 - __main__ - WARNING - Error processing Polymarket market: 'str' object has no attribute 'get'
+2026-03-30 14:01:23,762 - __main__ - WARNING - Error processing Polymarket market: 'str' object has no attribute 'get'
+2026-03-30 14:01:23,762 - __main__ - WARNING - Error processing Polymarket market: 'str' object has no attribute 'get'
+2026-03-30 14:01:23,762 - __main__ - WARNING - Error processing Polymarket market: 'str' object has no attribute 'get'
+2026-03-30 14:01:23,762 - __main__ - INFO - Collected 0 markets from Polymarket after filtering
+2026-03-30 14:01:23,763 - __main__ - WARNING - Kalshi credentials not configured
+2026-03-30 14:01:23,763 - __main__ - WARNING - Opinion API key not configured
+2026-03-30 14:01:24,194 - __main__ - INFO - Fetched 2 crypto prices
+2026-03-30 14:01:25,422 - httpx - INFO - HTTP Request: POST https://wicmwdwmnzujlviinflv.supabase.co/rest/v1/price_data?columns=%22price_usd%22%2C%22timestamp%22%2C%22asset%22 "HTTP/2 201 Created"
+2026-03-30 14:01:25,424 - __main__ - INFO - Saved 2 crypto prices to database
+2026-03-30 14:01:29,070 - httpx - INFO - HTTP Request: POST https://wicmwdwmnzujlviinflv.supabase.co/rest/v1/sentiment_data "HTTP/2 201 Created"
+2026-03-30 14:01:29,071 - __main__ - INFO - Saved Fear & Greed Index to database
+2026-03-30 14:01:29,071 - __main__ - INFO - ============================================================
+2026-03-30 14:01:29,071 - __main__ - INFO - Collection cycle completed in 5.90 seconds
+2026-03-30 14:01:29,071 - __main__ - INFO - Total markets collected: 0
+2026-03-30 14:01:29,072 - __main__ - INFO - ============================================================

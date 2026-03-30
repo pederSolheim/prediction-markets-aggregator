@@ -1,0 +1,31 @@
+services:
+  - type: worker
+    name: prediction-markets-aggregator
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python aggregator.py
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: KALSHI_EMAIL
+        sync: false
+      - key: KALSHI_PASSWORD
+        sync: false
+      - key: OPINION_API_KEY
+        sync: false
+      - key: ALERT_EMAIL_FROM
+        sync: false
+      - key: ALERT_EMAIL_TO
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+    autoDeploy: true
