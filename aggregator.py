@@ -7,6 +7,9 @@ Collects data from multiple prediction market platforms and stores in Supabase
 import os
 import sys
 import time
+from dotenv import load_dotenv
+load_dotenv()
+
 import logging
 import smtplib
 from email.mime.text import MIMEText
