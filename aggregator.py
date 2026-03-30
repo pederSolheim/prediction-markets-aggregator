@@ -59,6 +59,10 @@ class PredictionMarketsAggregator:
         url = os.getenv('SUPABASE_URL')
         key = os.getenv('SUPABASE_KEY')
         
+        # Debug logging
+        print(f"DEBUG: SUPABASE_URL = {url[:30] if url else 'None'}...")
+        print(f"DEBUG: SUPABASE_KEY = {key[:30] if key else 'None'}...")
+        
         if not url or not key:
             raise ValueError("SUPABASE_URL and SUPABASE_KEY environment variables required")
             
