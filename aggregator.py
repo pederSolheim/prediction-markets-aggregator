@@ -58,14 +58,14 @@ class PredictionMarketsAggregator:
         """Initialize Supabase client"""
         url = os.getenv('SUPABASE_URL')
         key = os.getenv('SUPABASE_KEY')
-        
+
         # Debug logging
         print(f"DEBUG: SUPABASE_URL = {url[:30] if url else 'None'}...")
         print(f"DEBUG: SUPABASE_KEY = {key[:30] if key else 'None'}...")
-        
+
         if not url or not key:
             raise ValueError("SUPABASE_URL and SUPABASE_KEY environment variables required")
-            
+
         return create_client(url, key)
     
     def _get_utc_timestamp(self) -> str:
@@ -134,32 +134,69 @@ class PredictionMarketsAggregator:
         timestamp = self._get_utc_timestamp()
         
         try:
-            # Get all active markets
-            url = f"{self.config['apis']['polymarket']['base_url']}/markets"
-            response = self.session.get(url, timeout=30)
-            response.raise_for_status()
-            
-            markets = response.json()
-            logger.info(f"Fetched {len(markets)} markets from Polymarket")
-            
+            # Fetch multiple pages to find active markets
+            all_markets = []
+            cursor = None
+            max_pages = 5  # Fetch up to 5000 markets
+
+            for page in range(max_pages):
+                url = f"{self.config['apis']['polymarket']['base_url']}/markets?limit=1000"
+                if cursor:
+                    url += f"&cursor={cursor}"
+
+                response = self.session.get(url, timeout=30)
+                response.raise_for_status()
+
+                response_data = response.json()
+                page_markets = response_data.get('data', [])
+                all_markets.extend(page_markets)
+
+                cursor = response_data.get('next_cursor')
+                logger.info(f"Page {page+1}: Fetched {len(page_markets)} markets (total so far: {len(all_markets)})")
+
+                if not cursor:
+                    logger.info("No more pages available")
+                    break
+
+            markets = all_markets
+            logger.info(f"Fetched {len(markets)} total markets from Polymarket across multiple pages")
+
+            # Add counters BEFORE the loop
+            closed_count = 0
+            no_question_count = 0
+            no_keyword_count = 0
+            low_volume_count = 0
+
             for market in markets:
                 try:
+                    # Skip closed markets
+                    if market.get('closed', False):
+                        closed_count += 1
+                        continue
+
                     question = market.get('question', '')
                     if not question:
+                        no_question_count += 1
                         continue
-                    
+
                     # Match category and tag
                     category, topic_tag = self._match_category_and_tag(question)
                     if not category:
+                        no_keyword_count += 1
+                        # Log first 5 unmatched questions
+                        if no_keyword_count <= 5:
+                            logger.info(f"No keyword match: {question[:80]}...")
                         continue
-                    
+
                     # Get volume
                     volume = float(market.get('volume', 0))
-                    min_volume = self.config['categories'][category]['min_volume_usd']
-                    
+                    min_volume = 0  # TEMP: Accept all volumes
+                    logger.info(f"DEBUG Polymarket: volume={volume}, min={min_volume}, category={category}")
+
                     if volume < min_volume:
+                        low_volume_count += 1
                         continue
-                    
+
                     # Get probability (best offer price)
                     tokens = market.get('tokens', [])
                     probability = None
@@ -168,10 +205,10 @@ class PredictionMarketsAggregator:
                         best_bid = tokens[0].get('price')
                         if best_bid:
                             probability = float(best_bid)
-                    
+
                     if probability is None:
                         probability = 0.5  # Default if not available
-                    
+
                     markets_data.append({
                         'source': 'polymarket',
                         'market_id': market.get('condition_id', market.get('id', '')),
@@ -182,11 +219,17 @@ class PredictionMarketsAggregator:
                         'volume_usd': volume,
                         'timestamp': timestamp
                     })
-                    
+
                 except Exception as e:
                     logger.warning(f"Error processing Polymarket market: {e}")
                     continue
-                    
+            logger.info(f"Polymarket filtering breakdown:")
+            logger.info(f"  Closed markets: {closed_count}")
+            logger.info(f"  No question: {no_question_count}")
+            logger.info(f"  No keyword match: {no_keyword_count}")
+            logger.info(f"  Volume too low: {low_volume_count}")
+            logger.info(f"  ✅ Passed filters: {len(markets_data)}")
+
             logger.info(f"Collected {len(markets_data)} markets from Polymarket after filtering")
             
         except Exception as e:
@@ -264,7 +307,8 @@ class PredictionMarketsAggregator:
                     
                     # Get volume (in cents, convert to USD)
                     volume = float(market.get('volume', 0)) / 100.0
-                    min_volume = self.config['categories'][category]['min_volume_usd']
+                    min_volume = 0  # TEMP: Accept all volumes
+                    logger.info(f"DEBUG: Checking market with volume={volume}, setting min_volume=0 for testing")
                     
                     if volume < min_volume:
                         continue
