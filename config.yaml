@@ -32,7 +32,7 @@ categories:
       - BOJ
       - tariff
       - trade war
-    min_volume_usd: 1000
+    min_volume_usd: 100000
     
   crypto:
     keywords:
@@ -63,7 +63,7 @@ categories:
       - blockchain
       - SEC
       - CFTC
-    min_volume_usd: 1000
+    min_volume_usd: 500000
     
   geopolitics:
     keywords:
@@ -89,7 +89,7 @@ categories:
       - OPEC
       - Middle East
       - Sudan
-    min_volume_usd: 1000
+    min_volume_usd: 100000
     
   politics:
     keywords:
@@ -111,7 +111,7 @@ categories:
       - strategic reserve
       - crypto bill
       - stablecoin bill
-    min_volume_usd: 1000
+    min_volume_usd: 50000
     
   companies:
     keywords:
@@ -128,7 +128,7 @@ categories:
       - Amazon
       - OpenAI
       - ChatGPT
-    min_volume_usd: 1000
+    min_volume_usd: 100000
 
 # API Configuration
 apis:
