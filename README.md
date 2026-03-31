@@ -2,7 +2,7 @@
 
 A Python data pipeline that collects real-time prediction market data from Polymarket, Kalshi, and Opinion.trade, along with crypto prices and Fear & Greed Index, storing everything in Supabase.
 
-## 🎯 Features
+## Features
 
 - **Multi-source data collection**: Polymarket, Kalshi, Opinion.trade
 - **Configurable keyword matching**: Edit categories and keywords without touching code
@@ -15,14 +15,14 @@ A Python data pipeline that collects real-time prediction market data from Polym
 - **Scheduled execution**: Runs every 15 minutes automatically
 - **Cloud deployment**: Ready for Railway or Render
 
-## 📋 Prerequisites
+## Prerequisites
 
 1. **Supabase account** (free tier works)
 2. **Kalshi account** (free registration at trading-api.kalshi.com)
 3. **Opinion.trade account** (free registration)
 4. **Railway or Render account** (free tier works)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Set Up Supabase
 
@@ -68,7 +68,7 @@ python aggregator.py --once
 python aggregator.py
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Editing Keywords (config.yaml)
 
@@ -121,7 +121,7 @@ apis:
     enabled: false  # Changed from true
 ```
 
-## 🚢 Deployment
+## Deployment
 
 ### Deploy to Railway
 
@@ -146,7 +146,7 @@ apis:
 5. Add environment variables in the dashboard
 6. Click "Create Background Worker"
 
-## 📊 Database Schema
+## Database Schema
 
 ### prediction_markets_raw
 - `id`: Auto-generated UUID
@@ -174,7 +174,7 @@ apis:
 - `timestamp`: Exact UTC timestamp
 - `created_at`: Auto-generated
 
-## 📈 Querying the Data
+## Querying the Data
 
 ### Get latest markets by topic
 ```sql
@@ -203,7 +203,7 @@ WHERE timestamp > NOW() - INTERVAL '24 hours'
 GROUP BY category;
 ```
 
-## 🔍 Monitoring
+## Monitoring
 
 ### Check Logs
 
@@ -238,7 +238,7 @@ Alerts are sent when:
 - Database operations fail
 - Scheduler encounters errors
 
-## 🧪 Testing
+## Testing
 
 ### Verify Data Collection
 
@@ -267,7 +267,7 @@ With 15-minute intervals over 48 hours:
 - 192 price records (BTC + ETH × 96 cycles)
 - 96 sentiment records
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### "No markets collected"
 - Check if keywords match active markets on the platforms
@@ -288,7 +288,7 @@ With 15-minute intervals over 48 hours:
 - Check their documentation for current API structure
 - You can disable it temporarily in `config.yaml`
 
-## 📝 API Notes
+## API Notes
 
 ### Polymarket
 - Public API, no authentication needed
@@ -314,18 +314,18 @@ With 15-minute intervals over 48 hours:
 - Free tier: 50 calls/minute
 - We only call once per cycle
 
-## 🔐 Security
+## Security
 
 - Never commit `.env` file
 - Use environment variables for all secrets
 - Rotate API keys periodically
 - Use Supabase Row Level Security (RLS) if exposing data
 
-## 📄 License
+## License
 
 This is a job application project. Modify as needed.
 
-## 🤝 Support
+## Support
 
 For issues or questions:
 1. Check logs first (`aggregator.log`)
@@ -333,7 +333,7 @@ For issues or questions:
 3. Test APIs individually with `--once` flag
 4. Check Supabase table permissions
 
-## 🎉 Success Checklist
+## Success Checklist
 
 - [ ] Supabase tables created with `schema.sql`
 - [ ] All environment variables configured
