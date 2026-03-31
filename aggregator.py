@@ -190,7 +190,7 @@ class PredictionMarketsAggregator:
 
                     # Get volume
                     volume = float(market.get('volume', 0))
-                    min_volume = 0  # TEMP: Accept all volumes
+                    min_volume = self.config['categories'][category]['min_volume_usd']
                     logger.info(f"DEBUG Polymarket: volume={volume}, min={min_volume}, category={category}")
 
                     if volume < min_volume:
@@ -307,7 +307,7 @@ class PredictionMarketsAggregator:
                     
                     # Get volume (in cents, convert to USD)
                     volume = float(market.get('volume', 0)) / 100.0
-                    min_volume = 0  # TEMP: Accept all volumes
+                    min_volume = self.config['categories'][category]['min_volume_usd']
                     logger.info(f"DEBUG: Checking market with volume={volume}, setting min_volume=0 for testing")
                     
                     if volume < min_volume:
